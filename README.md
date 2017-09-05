@@ -108,4 +108,6 @@ Luftmarinegade 38,1432 København K,2485131,137,18139
   - 3307228.119047619
 4. Describe in natural language and line-by-line what the program is doing. Describe also for each line what the Python code expresses.
   linje 1-6 importere 6 forskellige moduler ind i programmet
-  
+  linje 7
+  linje 8 imortere et modul der hedder "matplotlib.pyplot" og omdøber det til "plt"
+  linje 11 definere en funktion kaldet download_txt
