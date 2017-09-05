@@ -8,7 +8,7 @@
 2. Describe which types of files this program generates and attach the contents of each file together with its name to your solution.
   The program program generates 3 files. 1 csv, 1 txt and 1 png file 
 
-price_list.csv:
+  - price_list.csv:
 
   street,city,price,sqm,price_per_sqm
 "Ved Volden 5, 5. TV",1425 København K,4000000,91,43956
@@ -55,7 +55,7 @@ Luftmarinegade 38,1432 København K,2485131,137,18139
 "Gothersgade 147, 3. TV",1123 København K,3622500,68,53272
 
 
-price_list.txt:
+  - price_list.txt:
 
   * Ved Volden 5, 5. TV; 1425 København K	4000000	91
   * Rådhusstræde 4C, 1; 1466 København K	4895000	105
@@ -100,9 +100,11 @@ price_list.txt:
   * Store Kongensgade 90, 2. TH; 1264 København K	7500000	158
   * Gothersgade 147, 3. TV; 1123 København K	3622500	68
   
-prices.png
+  - prices.png
   
 
 3. What is the output of this program?
-  3307228.119047619
+  - 3307228.119047619
 4. Describe in natural language and line-by-line what the program is doing. Describe also for each line what the Python code expresses.
+  linje 1-6 importere 6 forskellige moduler ind i programmet
+  
