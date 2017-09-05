@@ -101,6 +101,7 @@ Luftmarinegade 38,1432 København K,2485131,137,18139
   * Gothersgade 147, 3. TV; 1123 København K	3622500	68
   
   - prices.png
+  
 ![Alt text](https://github.com/pilgaard/Business-inteligence-/blob/master/prices.png)  
 
 3. What is the output of this program?
