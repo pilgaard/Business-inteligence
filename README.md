@@ -7,9 +7,9 @@
   
 2. Describe which types of files this program generates and attach the contents of each file together with its name to your solution.
   The program program generates 3 files. 1 csv, 1 txt and 1 png file 
+
 price_list.csv:
-  
-street,city,price,sqm,price_per_sqm
+  street,city,price,sqm,price_per_sqm
 "Ved Volden 5, 5. TV",1425 København K,4000000,91,43956
 "Rådhusstræde 4C, 1",1466 København K,4895000,105,46619
 "Store Kongensgade 112A, 3",1264 København K,250000,135,1851
@@ -52,6 +52,7 @@ Luftmarinegade 38,1432 København K,2485131,137,18139
 "Strandgade 12, 3",1401 København K,7170000,228,31447
 "Store Kongensgade 90, 2. TH",1264 København K,7500000,158,47468
 "Gothersgade 147, 3. TV",1123 København K,3622500,68,53272
+
 
 price_list.txt:
 
