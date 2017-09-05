@@ -9,6 +9,7 @@
   The program program generates 3 files. 1 csv, 1 txt and 1 png file 
 
 price_list.csv:
+
   street,city,price,sqm,price_per_sqm
 "Ved Volden 5, 5. TV",1425 København K,4000000,91,43956
 "Rådhusstræde 4C, 1",1466 København K,4895000,105,46619
@@ -103,4 +104,5 @@ prices.png
   
 
 3. What is the output of this program?
+  3307228.119047619
 4. Describe in natural language and line-by-line what the program is doing. Describe also for each line what the Python code expresses.
