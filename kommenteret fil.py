@@ -111,23 +111,34 @@ def generate_plot(data):
 # vi indsætter x og y værdierne som et koordinat i vores figur med en prik der har en størelse på 100
     plt.scatter(x_values, y_values, s=100)
 # til sidst gemmer vi figuren som prices.png i det directory vi befinder os i.
-# vi bruger bbox_inches='tight' til at fjerne alt den overskydende plads rund om vores figur 
+# vi bruger bbox_inches='tight' til at fjerne alt den overskydende plads rund om vores figur
     fig.savefig('./prices.png', bbox_inches='tight')
 
-
+# vi laver en run metode
 def run():
+# vi gemmer en url til en txt fil i en variable file_url
     file_url = 'https://raw.githubusercontent.com/datsoftlyngby/' \
                'soft2017fall-business-intelligence-teaching-material/master/' \
                'assignments/assignment_1/price_list.txt'
+# os.path.basename(file_url) giver os navnet på den fil der befinder sig på denne sti. vi gemmer så navnet i txt_file_name
     txt_file_name = os.path.basename(file_url)
+# os.path.join('./', txt_file_name) kombinere den sti vi befinder os i med txt_file_name og gemmer så den sammensatte sti i txt_path
     txt_path = os.path.join('./', txt_file_name)
+# vi kalder vores download_txt metode og giver den file_url og txt_path som parametre
     download_txt(file_url, txt_path)
+# vi laver en string
     csv_file_name = 'price_list.csv'
+# os.getcwd returnere vores nuværende directory som en string, denne string kombinere vi med csv_file_name og gemmer den sammensatte sti i csv_path
     csv_path = os.path.join(os.getcwd(), csv_file_name)
+# vi kalder vores generate_csv med parametrene txt_path og csv_path
     generate_csv(txt_path, csv_path)
+# vi laver en liste hvor vi kan gemme resultaterne fra vores read_prices metode, denne metode tager stien til vores csv fil som parameter
     data = read_prices(csv_path)
+# vi gemmer resultatet fra vores compute_avg_price metode i avg_price. avg_price tager data som parameter
     avg_price = compute_avg_price(data)
+# vi udskriver avg_price
     print(avg_price)
+# vi kalder vores metode generate_plot som tager data som parameter
     generate_plot(data)
 
 # her har vi en condition der tjekker om vores __name__ variable er lig med '__main__'
