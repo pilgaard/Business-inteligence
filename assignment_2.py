@@ -2,8 +2,8 @@ import bs4
 import requests
 import csv
 import os
+import re
 
-url = "http://138.197.184.35/boliga/"
 def scrape_index(url):
 
     indexes = []
@@ -17,8 +17,7 @@ def scrape_index(url):
     links = table_body.find_all('a')
     del links [:5]
 
-#    for link in links:
-#        print(link.get("href"))
+    links = [link.text for link in links]
 
     return links
 
@@ -33,7 +32,6 @@ def save_to_csv(data, path='./out/boliga.csv'):
 
         for row in data:
             output_writer.writerow(row)
-
 
 def scrape_housing_data(url):
 
@@ -50,48 +48,97 @@ def scrape_housing_data(url):
         cols = row.find_all('td')
 
         # Decode address column
-        address_str = cols[0].text.strip()
-        street_str = ' '.join(address_str.split(' ')[:-3])
-        city_str = ' '.join(address_str.split(' ')[-3:])
-        zip_number = int(address_str.split(' ')[-3])
+        links = cols[0].find_all('a')
+        line = re.sub(r'<br/>', '\n',str(links[0]))
+        _, line,_ = line.split('>')
+        line,_ = line.split('<')
+        street, town = line.split('\n')
+        zip_code, city = town.split(' ',1)
+        int(zip_code)
 
         # Decode number of rooms
-        no_rooms_str = cols[1].text.strip()
-        no_rooms = int(no_rooms_str)
-
+        no_rooms_str = cols[4].text.strip()
+        try:
+            no_rooms = int(no_rooms_str)
+        except:
+            no_rooms = None
         # Decode selling date and type
-        size_in_sq_m_str = cols[2].text.strip()
-        size_in_sq_m = int(size_in_sq_m_str)
-
+        size_in_sq_m_str = cols[6].text.strip()
+        try:
+            size_in_sq_m = int(size_in_sq_m_str)
+        except:
+            size_in_sq_m = None
         # Decode year of construction
-        year_of_construction_str = cols[3].text.strip()
-        year_of_construction = int(year_of_construction_str)
-
+        year_of_construction_str = cols[7].text.strip()
+        try:
+            year_of_construction = int(year_of_construction_str)
+        except:
+            year_of_construction = None
         # Decode price
-        price_str = cols[4].text.strip()
-        price = float(price_str)
-
+        price_str = cols[1].text.strip()
+        try:
+            price = float(price_str.replace('.',''))
+        except:
+            price = None
         # Decode sales date
-        sale_date_str = cols[5].text.strip()
+        sale_date_str = cols[2].text.strip()
+        sale_date = sale_date_str[:10]
 
-        decoded_row = (street_str, city_str, zip_number, no_rooms,
+        decoded_row = (street, city, zip_code, no_rooms,
                        size_in_sq_m, year_of_construction, price,
-                       sale_date_str)
+                       sale_date)
         data.append(decoded_row)
 
     print('Scraped {} sales...'.format(len(data)))
 
     return data
 
+def save(base_url, urls):
+    result = []
+    for url in urls:
+        u = os.path.join(base_url, url)
+        result += scrape_housing_data(u)
+    save_to_file = os.path.join(out_dir, os.path.basename(url).split('_')[0] + '.csv')
+    save_to_csv(result, save_to_file)
+
 def run():
-    out_dir = './data/out'
-    if not os.path.exists(out_dir):
-        os.mkdir(out_dir)
 
-    base_url = 'http://127.0.0.1:8888/files/data'
-    urls = ['boliga_1050-1549_1.html', 'boliga_1050-1549_2.html', 'boliga_1550-1799_1.html']
-    urls = [os.path.join(base_url, url) for url in urls]
+    base_url = 'http://138.197.184.35/boliga/'
+    urls = scrape_index(base_url)
+    """    new_list = []
+        area = ""
 
+        for value in links:
+            temp, _ = value.split('_')
+            if not new_list or area == temp:
+                new_list.append(value)
+
+                #save(base_url, new_list)
+            else:
+                print(new_list)
+                new_list = []
+                area, _ = value.split('_')
+    """
+    new_list =[]
+    count = 0
+
+    for i in urls:
+        _, number = i.split('_')
+        number,_ = number.split('.')
+        num= int(number)
+        temp = count+1
+        if num == temp:
+            new_list.append(i)
+            count+=1
+        else:
+            save(base_url, new_list)
+            new_list = []
+            count = 1
+            new_list.append(i)
+
+    save(base_url, new_list)
+
+"""
     fst_fourty_results = scrape_housing_data(urls[0])
     snd_fourty_results = scrape_housing_data(urls[1])
     fst_results = fst_fourty_results + snd_fourty_results
@@ -102,9 +149,8 @@ def run():
     last_results = scrape_housing_data(urls[2])
     save_to_file = os.path.join(out_dir, os.path.basename(urls[2]).split('_')[1] + '.csv')
     save_to_csv(last_results, save_to_file)
-
+"""
+out_dir = './data/out'
+if not os.path.exists(out_dir):
+    os.mkdir(out_dir)
 run()
-
-#base_url = 'http://127.0.0.1:8888/files/data/boliga_1050-1549_1.html'
-#housing_data = scrape_housing_data(base_url)
-#housing_data[:3]
