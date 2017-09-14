@@ -3,6 +3,7 @@ import requests
 import csv
 import os
 import re
+from tqdm import tqdm
 
 def scrape_index(url):
 
@@ -89,7 +90,7 @@ def scrape_housing_data(url):
                        sale_date)
         data.append(decoded_row)
 
-    print('Scraped {} sales...'.format(len(data)))
+    #print('Scraped {} sales...'.format(len(data)))
 
     return data
 
@@ -105,24 +106,10 @@ def run():
 
     base_url = 'http://138.197.184.35/boliga/'
     urls = scrape_index(base_url)
-    """    new_list = []
-        area = ""
-
-        for value in links:
-            temp, _ = value.split('_')
-            if not new_list or area == temp:
-                new_list.append(value)
-
-                #save(base_url, new_list)
-            else:
-                print(new_list)
-                new_list = []
-                area, _ = value.split('_')
-    """
     new_list =[]
     count = 0
 
-    for i in urls:
+    for i in tqdm(urls, desc='saving files'):
         _, number = i.split('_')
         number,_ = number.split('.')
         num= int(number)
