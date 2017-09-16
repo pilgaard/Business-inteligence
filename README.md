@@ -606,6 +606,6 @@ Antal linjer i hver fil, den øverste er den med flest linjer, og den nederste m
 
 * programmet skal køres i et miljø der har python installeret
 
-* naviger til projektet og videre ind til denne sti /Business-inteligence--1.0/assignment_2
+* naviger til projektet og videre ind til denne sti /Business-inteligence-1.0/assignment_2
 
 * kør bash download_script.sh
