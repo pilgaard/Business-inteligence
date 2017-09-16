@@ -1,8 +1,10 @@
 # Assignment 2
 
 ```
+Antal linjer ialt 
   1277606 total
 
+Antal linjer i hver fil, den øverste er den med flest linjer, og den nederste med færreste
   17406 ./data/out/2300.csv
   13723 ./data/out/8700.csv
   13137 ./data/out/4000.csv
@@ -596,8 +598,8 @@
     188 ./data/out/6535.csv
     134 ./data/out/7270.csv
 
-    Most sales in 2300 with 17406. The file is 1,2Mb
-    Fewest sales in 7270 with 134. the file is 8,0 Kb
+    Der er flest linjer/salg i postnummer 2300 med 17406 linjer/salg. Filen er på 1,2Mb
+    Der er færrest salg i postnummer 7270 med 134 linjer/salg. File er på 8,0 Kb
 ```
 # Setup guide
 * for at kunne køre scraperen skal du have en unix terminal
