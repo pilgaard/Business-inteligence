@@ -1,2 +1,4 @@
-
-data/*
+assignment_2/data/out/*
+*.DS_Store
+data/out/.DS_Store
+data/.DS_Store

@@ -110,7 +110,7 @@ def run():
     count = 0
 
     for i in tqdm(urls, desc='saving files'):
-        _, number = i.split('_')
+        zip_number, number = i.split('_')
         number,_ = number.split('.')
         num= int(number)
         temp = count+1
@@ -118,25 +118,15 @@ def run():
             new_list.append(i)
             count+=1
         else:
-            save(base_url, new_list)
+            destination = os.path.join(out_dir, os.path.basename(zip_number) + '.csv')
+            if not os.path.exists(destination):
+                save(base_url, new_list)
             new_list = []
             count = 1
             new_list.append(i)
 
     save(base_url, new_list)
 
-"""
-    fst_fourty_results = scrape_housing_data(urls[0])
-    snd_fourty_results = scrape_housing_data(urls[1])
-    fst_results = fst_fourty_results + snd_fourty_results
-
-    save_to_file = os.path.join(out_dir, os.path.basename(urls[0]).split('_')[1] + '.csv')
-    save_to_csv(fst_results, save_to_file)
-
-    last_results = scrape_housing_data(urls[2])
-    save_to_file = os.path.join(out_dir, os.path.basename(urls[2]).split('_')[1] + '.csv')
-    save_to_csv(last_results, save_to_file)
-"""
 out_dir = './data/out'
 if not os.path.exists(out_dir):
     os.mkdir(out_dir)
