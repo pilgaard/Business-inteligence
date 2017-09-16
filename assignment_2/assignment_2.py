@@ -128,6 +128,8 @@ def run():
     save(base_url, new_list)
 
 out_dir = './data/out'
-if not os.path.exists(out_dir):
-    os.mkdir(out_dir)
+if not os.path.exists('./data'):
+    os.mkdir('./data')
+    if not os.path.exists(out_dir):
+        os.mkdir(out_dir)
 run()
