@@ -597,3 +597,11 @@
     Most sales in 2300 with 17406. The file is 1,2Mb
     Fewest sales in 7270 with 134. the file is 8,0 Kb
 ```
+# Setup guide
+* for at kunne køre scraperen skal du have en unix terminal
+
+* programmet skal køres i et miljø der har python installeret
+
+* naviger til projektet og videre ind til denne sti /Business-inteligence--1.0/assignment_2
+
+* kør bash download_script.sh
