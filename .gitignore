@@ -3,3 +3,5 @@ assignment_2/data/out/*
 data/out/.DS_Store
 data/.DS_Store
 .DS_Store
+vm/.vagrant/*
+vm/data/*

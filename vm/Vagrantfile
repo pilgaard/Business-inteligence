@@ -1,0 +1,43 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "bento/ubuntu-16.04"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 8080, host: 8081
+  config.vm.network "forwarded_port", guest: 8888, host: 8888
+
+  config.vm.synced_folder "../", "/synced_folder"
+
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    sudo apt-get update
+
+    sudo apt-get install -y git
+    sudo apt-get install -y wget
+
+    echo "Installing Anaconda..."
+    sudo wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh -O ~/Anaconda3-4.4.0-Linux-x86_64.sh
+    # Anaconda should not be installed as root as earlier...
+    bash ~/Anaconda3-4.4.0-Linux-x86_64.sh -b
+
+    sudo echo ". $HOME/.bashrc" >> $HOME/.bash_profile
+    sudo echo "export PATH=$HOME/anaconda3/bin:$PATH" >> $HOME/.bash_profile
+
+    export PATH="$HOME/anaconda3/bin:$PATH"
+
+    # TODO: chown for /home/ubuntu/anaconda3 or add ubuntu user to group to install packages without sudo
+    $(which conda) install -y keras
+    $(which conda) install -y basemap
+    $(which conda) install -y nltk
+    $(which conda) install -y netcdf4
+
+    $(which pip) install suplemon
+    $(which pip) install folium
+    $(which pip) install osmread
+
+
+    # this package is necessary for matplotlib to work and not installed by
+    # default
+    sudo apt-get install -y libgl1-mesa-glx
+
+  SHELL
+end
