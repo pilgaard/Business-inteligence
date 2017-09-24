@@ -2,43 +2,43 @@ import pandas as pd
 import numpy as np
 import requests
 import os
+import csv
+from osmread import parse_file, Node
+from collections import defaultdict
 
-###########################################
-######## ADDING COLUMN TO 2D ARRAY ########
-"""test_twodim = np.array([[ 1,  2, 3, 4],
-                        [ 1,  2, 3, 4],
-                        [ 1,  2, 3, 4]])
-test_df = pd.DataFrame(test_twodim)
-array_to_add = np.array([[1],
-                       [1],
-                       [1]])
-test_df['new_col'] = array_to_add"""
-##########################################
+def decode_node_to_csv():
+    for entry in parse_file('./data/denmark-latest.osm'):
+        if (isinstance(entry, Node) and
+            'addr:street' in entry.tags and
+            'addr:postcode' in entry.tags and
+            'addr:housenumber' in entry.tags):
 
-path = "../assignment_2/data/boliga_all.csv"
-housing_df = pd.read_csv(path)
+            yield entry
 
-def get_address_from_dataframe():
-    addresses = housing_df["street"].values ## Dette virker ikke
-    return addresses
+def save_geolocations(decoded_nodes):
+    houses = pd.DataFrame([])
+    lat = []
+    lon = []
 
-def get_location_for(address):
-    api_url = 'https://maps.googleapis.com/maps/api/geocode/json'
+    for idx, decoded_node in enumerate(decoded_nodes):
+        houses = houses.append(pd.DataFrame(decoded_node.tags, columns=['addr:street', 'addr:postcode', 'addr:housenumber'],index=[idx]))
+        lat.append(decoded_node.lat)
+        lon.append(decoded_node.lon)
+    df = pd.DataFrame({'lat': lat, 'lon': lon}, columns=['lat', 'lon'])
+    houses.columns = ['street', 'zipcode', 'addr:housenumber']
+    houses["street"] = houses["street"].map(str) +" "+ houses["addr:housenumber"]
 
-    try:
-        r = requests.get(api_url, params={'sensor': 'false',
-                                          'address': address})
-        results = r.json()['results']
+    df1 = pd.merge(houses, df, left_index=True, right_index=True)
+    return df1
 
-        location = results[0]['geometry']['location']
-        lat, lon = location['lat'], location['lng']
-    except:
-        lat, lon = None, None
-    return lat, lon
+def merge_lists():
+    housing_df = pd.read_csv('./boliga_all.csv')
+    for value in housing_df:
+        print(value)
 
-print(get_location_for("Tranevej 68A"))
+def run():
+    decoded_nodes = decode_node_to_csv()
+    results = save_geolocations(decoded_nodes)
+    results.to_csv("decoded_nodes.csv")
 
-
-def get_all_locations(addresses):
-    for address in addresses:
-        return get_location_for(address)
+run()

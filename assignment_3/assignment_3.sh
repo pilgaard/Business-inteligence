@@ -4,3 +4,5 @@ wget --directory-prefix=./data/ http://download.geofabrik.de/europe/denmark-late
 bzip2 -d ./data/denmark-latest.osm.bz2
 
 pip install osmread
+
+python assignment_3
