@@ -1,5 +1,9 @@
-# Assignment 3
+# Assignment 4
 
-programmet kræver koden fra assignment_2 allerede er kørt, da dette vil downloade de nødvendige filer fra boliga
-programmet skal køres fra assignment_3.sh, dette vil køre nogle komandoer inden det vil køre python programmer som er nødvendige
+For at kunne køre programmet skal der være installeret
+folium 
+matplotlib
+basemap
+derudover skal filen fra boliga med geo locationer ligge i data mappen
 
+koden køres med kommandoen `python main.py`
