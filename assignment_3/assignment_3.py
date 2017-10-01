@@ -18,7 +18,7 @@ def decode_node_to_csv():
 
             yield entry
 
-def save_geolocations(decoded_nodes):
+def save_geolocations():
     #vi læser vores boliga fil ind og laver den til et data frame
     tdataframe = pd.read_csv(boliga)
     # vi laver to nye dataframes "lat" og "lon" og siger værdierne er "not a number"
@@ -31,7 +31,7 @@ def save_geolocations(decoded_nodes):
 
     dataframe.set_index("api_addresses", inplace=True)
 
-    for idx, decoded_node in enumerate(decoded_nodes):
+    for idx, decoded_node in enumerate(decode_node_to_csv()):
         try:
             geocoded_address = (decoded_node.tags['addr:street'] + " " + decoded_node.tags['addr:housenumber'] + " " + decoded_node.tags['addr:postcode'] + " " + decoded_node.tags['addr:city'], decoded_node.lon, decoded_node.lat)
 
